@@ -3,6 +3,8 @@ from pydantic import BaseModel
 import joblib
 import pandas as pd
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -10,6 +12,14 @@ app = FastAPI(
     description="Predict loan approval using Logistic Regression and Decision Tree models",
     version="1.0"
 )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Load models and preprocessing objects
 log_model = joblib.load("models/logistic_model.joblib")
